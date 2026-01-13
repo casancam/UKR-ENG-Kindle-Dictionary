@@ -10,6 +10,11 @@ __pycache__/
 
 # Temporary files or directories
 temp/
+.claude/
+tmpclaude-*
 
 # Virtual environment directory
 venv/
+
+# Built MOBI file (distributed via GitHub Releases)
+*.mobi

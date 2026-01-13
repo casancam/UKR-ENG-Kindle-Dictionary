@@ -1,120 +1,123 @@
-<img src="https://github.com/user-attachments/assets/8b2ffba5-74f9-4308-b455-57068e2e0c1c">
+# Ukrainian-English Dictionary for Kindle 🇺🇦🇬🇧
 
-## About 🇬🇧🇺🇦
+**A comprehensive Ukrainian-to-English dictionary for Kindle e-readers**
 
-<img src="https://github.com/user-attachments/assets/1dee5c1e-1d68-4546-9fef-7971fbbd0806" align="right" width="250px">
+This Kindle-native dictionary enables seamless Ukrainian word lookups while reading, making it the perfect companion for English speakers learning Ukrainian or Ukrainian readers engaging with English content.
 
-**Welcome to the English-Ukrainian Dictionary for Kindle!**
-
-This comprehensive, Kindle-native dictionary is designed to provide seamless translations while reading, making it the perfect companion for language learners, translators, and book lovers! 📚✨
-
-If you’re a Ukrainian native speaker expanding your English vocabulary through reading, or an English speaker learning Ukrainian, this dictionary enables instant word lookups without disrupting your reading experience.
-
-Compatible with all Kindle models and generations — including *Kindle Paperwhite*, *Oasis*, *Scribe* and others, it integrates directly into the Kindle lookup feature. It also works on any e-reader or app that supports MOBI dictionaries, ensuring a smooth and effortless bilingual reading experience.
+Compatible with all Kindle models and generations — including *Kindle Paperwhite*, *Oasis*, *Scribe* and others, it integrates directly into the Kindle lookup feature. It also works on any e-reader or app that supports MOBI dictionaries.
 
 ## Features
 
-- 🔍 **Optimized for Kindle**. Look up words instantly without leaving your book!<br/>
-- ⚡ **Fast & Lightweight**. No lag, no hassle.<br/>
-- 📚 **Massive Word Database**. Includes over 75,000 articles and 155,000+ words!<br/>
-- 📖 **Based on the trusted dictionary**. *Англо-український словник М.І. Балла*, sourced from [bakustarver/ukr-dictionaries-list-opensource](https://github.com/bakustarver/ukr-dictionaries-list-opensource).<br/>
-- 🌍 **British & American Spellings**. Whether it’s *color/colour* or *organize/organise*, this dictionary has you covered!
-- 🔠 **Supports Different Word Forms**. Various verb conjugations, adjective forms, and plural nouns for accurate translations.
+- 🔍 **Optimized for Kindle**. Look up Ukrainian words instantly without leaving your book
+- 📚 **Comprehensive Database**. Over 30,000 Ukrainian words with English definitions
+- ⚡ **Fast & Lightweight**. No lag, no hassle
+- 📖 **Rich Definitions**. Includes part of speech, gender information, and multiple meanings
+- 🎯 **Quality Source**. Based on Wiktionary and DBnary data
+- 🔠 **Grammatical Info**. Includes verb aspects, noun genders, and usage examples
 
 ## Installation
 
-1. Download [the dictionary](https://github.com/pavlo-liapin/kindle-eng-ukr-dictionary/releases/download/1.0/en-ua-dictionary-1.0.mobi) in MOBI format.
-2. Install [Calibre](https://calibre-ebook.com) on your computer.
-3. Connect your Kindle to your computer using a USB cable.
-4. In Calibre, go to *Device* > *Add Books from a single folder*, and select
-   the downloaded MOBI file.
-5. Once the transfer is complete, go to *Device* > *Eject* to safely remove
-   your Kindle.
-6. On your Kindle, set it as the default dictionary.
+### Download Pre-built Dictionary (Recommended)
 
-## 📬 Contact & Support
+1. Download the latest `uk-en-dictionary.mobi` file from the [Releases](../../releases/latest) page
+2. Connect your Kindle to your computer via USB
+3. Copy the MOBI file to your Kindle's `documents` folder
+4. Safely eject your Kindle
+5. On your Kindle:
+   - Go to **Settings** > **Your Account** > **Language & Dictionaries**
+   - Select this dictionary as the default Ukrainian dictionary
 
-Have questions or suggestions? Drop a message in the Issues tab or reach out on GitHub!
+### Build from Source
 
-Happy reading! 📚✨
+If you prefer to build the dictionary yourself, see the [Development](#development) section below.
+
+## Usage
+
+Once installed, simply tap on any Ukrainian word while reading on your Kindle to see its English definition. The dictionary will automatically appear with:
+- English translations
+- Part of speech (noun, verb, adjective, etc.)
+- Gender and case information (for nouns)
+- Multiple definitions and usage contexts
 
 ## Development
 
 ### Prerequisites
 
-The scripts have been tested with **Python 3.10.16**, and the following dependencies are required:
+- **Python 3.10+** (tested with Python 3.14)
+- **Calibre** (for building MOBI files): [Download](https://calibre-ebook.com)
+
+No additional Python dependencies are required. The scripts use only standard library modules.
+
+### Building the Dictionary
 
 ```bash
-pip install pyinflect
-pip install -U pip setuptools wheel
-pip install -U spacy
-python -m spacy download en_core_web_sm
+# 1. Generate dictionary XHTML files
+python main.py
+
+# 2. Build MOBI file
+python build.py
 ```
 
-> [!NOTE]
-> On macOS ARM (e.g., M1/M2), use `spacy[apple]` instead of `spacy` for compatibility.
-> For more details, refer to the [SpaCy installation guide](https://spacy.io/usage#installation).
+The final `uk-en-dictionary.mobi` file will be created in the project root.
+
+### Project Structure
+
+```
+.
+├── src/
+│   └── ukr-eng-words.json.zip    # Compressed dictionary data (30K+ words)
+├── scripts/
+│   ├── 0.convert-json.py         # Extract and convert JSON to tab-separated format
+│   ├── 1.crosslinks.py           # Process cross-references
+│   ├── 2.clean-markup.py         # Clean HTML markup
+│   └── 3.convert-to-xhtml.py     # Generate final XHTML dictionary files
+├── output/
+│   ├── dictionary.opf            # OPF metadata file for Kindle
+│   ├── dictionary-1.xhtml        # Dictionary content (part 1)
+│   ├── dictionary-2.xhtml        # Dictionary content (part 2)
+│   └── dictionary-3.xhtml        # Dictionary content (part 3)
+├── main.py                       # Main build script
+└── build.py                      # MOBI conversion script
+```
 
 ### Scripts
 
-The following scripts are executed sequentially to process the original source dictionary:
-
-| Script Name                                 | Purpose                                                                                   |
-|---------------------------------------------|-------------------------------------------------------------------------------------------|
-| [00.sanitize.py](scripts/00.sanitize.py)    | Removes metadata entries from the dictionary.                                             |
-| [01.crosslinks.py](scripts/01.crosslinks.py)| Merges dictionary articles with simple links into a single consolidated entry.            |
-| [02.varcon-csv.py](scripts/02.varcon-csv.py)| Converts the Variant Conversion (VarCon) dataset into a CSV of British and American variants. |
-| [03.variants.py](scripts/03.variants.py)    | Applies the generated CSV to add synonyms and variants to the dictionary.                 |
-| [04.irregular-nouns.py](scripts/04.irregular-nouns.py)| Extracts irregular noun inflections from the dictionary and saves them in a CSV.           |
-| [05.filter-irregular-nouns.py](scripts/05.filter-irregular-nouns.py)| Merges dictionary articles for irregular nouns into their main entries.                    |
-| [06.regular-nouns.py](scripts/06.regular-nouns.py)| Processes regular noun inflections, such as plural forms.                                  |
-| [07.adjectives.py](scripts/07.adjectives.py)| Generates comparative and superlative forms of adjectives.                                |
-| [08.filter-irregular-verbs.py](scripts/08.filter-irregular-verbs.py)| Merges dictionary articles for irregular verbs into their main entries.                    |
-| [09.irregular-verbs.py](scripts/09.irregular-verbs.py)| Extracts irregular verb inflections and saves them in a CSV.                               |
-| [10.regular-verbs.py](scripts/10.regular-verbs.py)| Processes regular verb inflections (e.g., past tense, participles, -ing form, singular forms). |
-| [11.all-inflections.py](scripts/11.all-inflections.py)| Applies all previously extracted and processed inflections back into the dictionary.       |
-| [12.clean-markup.py](scripts/12.clean-markup.py)| Cleans up redundant markup from the original source file.                                  |
-| [13.convert-to-xhtml.py](scripts/13.convert-to-xhtml.py)| Converts the processed dictionary data into XHTML format for final output.                 |
-
-Each script plays a critical role in transforming the source dictionary into its final structured and usable format.
+| Script | Purpose |
+|--------|---------|
+| [0.convert-json.py](scripts/0.convert-json.py) | Extracts dictionary data from compressed ZIP and converts to tab-separated format |
+| [1.crosslinks.py](scripts/1.crosslinks.py) | Processes cross-references between dictionary entries |
+| [2.clean-markup.py](scripts/2.clean-markup.py) | Cleans and standardizes HTML markup |
+| [3.convert-to-xhtml.py](scripts/3.convert-to-xhtml.py) | Generates final XHTML files for Kindle |
 
 ## Acknowledgments
 
-Thanks to these great resources that helped in preparing this dictionary:
+Thanks to these great resources that made this dictionary possible:
 
-- [Ukrainian offline dictionaries in open formats](https://github.com/bakustarver/ukr-dictionaries-list-opensource)
-  for providing the source of this dictionary.
+- **[dmklinger/ukrainian](https://github.com/dmklinger/ukrainian)** for providing the comprehensive Ukrainian-English dictionary data sourced from Wiktionary and DBnary. This project's data is distributed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
-- **Jake McCrary**'s article
-  [Creating a custom Kindle dictionary](https://jakemccrary.com/blog/2020/11/11/creating-a-custom-kindle-dictionary/)
-  for explaining the basics of the Kindle dictionary format.
+- **[pavlo-liapin/kindle-eng-ukr-dictionary](https://github.com/pavlo-liapin/kindle-eng-ukr-dictionary)** for the inspiration and reference implementation for building Kindle dictionaries, which provided the foundation and approach for this project.
 
-- **Hossein Yazdani**'s open-source
-  [English-Persian Dictionary](https://github.com/hossein1376/English-Persian-Kindle-Custom-Dictionary)
-  and
-  [Kindle Custom Dictionary Scripts](https://github.com/hossein1376/Kindle-Custom-Dictionary-Scripts)
-  for providing basic scripts that actually work.
-
-- **Kevin Atkinson** and **Benjamin Titze** for the
-  [**VarCon dataset**](src/varcon.zip) (Variant Conversion Info),
-  which provides information to convert between American, British, Canadian,
-  and Australian spellings and vocabulary.
+- **Jake McCrary**'s article [Creating a custom Kindle dictionary](https://jakemccrary.com/blog/2020/11/11/creating-a-custom-kindle-dictionary/) for explaining the basics of the Kindle dictionary format.
 
 ## License
 
-### Attribution for AI-Generated Content
-Some parts of this project, including code and images, were generated with the
-assistance of OpenAI's ChatGPT. OpenAI asserts no copyright over the outputs
-you generate with ChatGPT, and you are free to use them in accordance with the
-terms of the [OpenAI Usage Policies](https://openai.com/policies/usage-policies).
+### Dictionary Data
 
-### VarCon Licensing
+The dictionary data is sourced from [dmklinger/ukrainian](https://github.com/dmklinger/ukrainian), which aggregates information from Wiktionary and DBnary. The data is distributed under the **Creative Commons Attribution-ShareAlike 3.0 Unported License**.
 
-The VarCon dataset is Copyright 2000-2020 by Kevin Atkinson and Benjamin Titze
-and is used under the terms of its license, which permits use, modification,
-and redistribution with proper attribution.
+### Code
 
-The VarCon dataset was derived from numerous sources, including the Ispell
-distribution, and is provided "as is" without warranty.
+The scripts and build system in this repository are provided as-is for building Kindle dictionaries. Feel free to use and modify them for your own dictionary projects.
 
-For more details, visit the official VarCon page: [http://wordlist.aspell.net/](http://wordlist.aspell.net/).
+## Contributing
+
+Contributions are welcome! If you find issues with definitions or have suggestions for improvements, please:
+
+1. For dictionary content issues: Report them to the upstream [dmklinger/ukrainian](https://github.com/dmklinger/ukrainian) repository
+2. For build system or script issues: Open an issue or pull request in this repository
+
+## Support
+
+Have questions or suggestions? Drop a message in the Issues tab or reach out on GitHub!
+
+Happy reading! 📚✨

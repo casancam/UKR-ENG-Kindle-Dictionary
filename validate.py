@@ -12,7 +12,7 @@ def count_repeated_occurrences(filename):
     repeated_occurrences = {}
     keys_with_empty_second_column = []
 
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         for line in file:
             columns = line.strip().split('\t')
 

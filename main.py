@@ -3,32 +3,19 @@ import subprocess
 import shutil
 
 # List of scripts to execute
+# Note: Using dmklinger/ukrainian JSON dictionary (Ukrainian to English)
 scripts = [
-    "00.sanitize.py",
-    "01.crosslinks.py",
-    "02.varcon-csv.py",
-    "03.variants.py",
-    "04.irregular-nouns.py",
-    "05.filter-irregular-nouns.py",
-    "06.regular-nouns.py",
-    "07.adjectives.py",
-    "08.filter-irregular-verbs.py",
-    "09.irregular-verbs.py",
-    "10.regular-verbs.py",
-    "11.all-inflections.py",
-    "12.clean-markup.py",
-    "13.convert-to-xhtml.py",
+    "0.convert-json.py",
+    "1.crosslinks.py",
+    "2.clean-markup.py",
+    "3.convert-to-xhtml.py",
 ]
 
 # Mapping of scripts to specific validation output files
 validation_mapping = {
-    "00.sanitize.py": "temp/00.sanitize.txt",
-    "01.crosslinks.py": "temp/01.crosslinks.txt",
-    "03.variants.py": "temp/03.british-american-variants.txt",
-    "05.filter-irregular-nouns.py": "temp/05.filter-irregular-nouns.txt",
-    "08.filter-irregular-verbs.py": "temp/08.filter-irregular-verbs.txt",
-    "11.all-inflections.py": "temp/11.all-inflections.txt",
-    "12.clean-markup.py": "temp/12.clean-markup.txt",
+    "0.convert-json.py": "temp/0.convert-json.txt",
+    "1.crosslinks.py": "temp/1.crosslinks.txt",
+    "2.clean-markup.py": "temp/2.clean-markup.txt",
 }
 
 # Colorful ASCII header and footer
@@ -80,7 +67,7 @@ def count_lines_and_words(filename):
         line_count = 0
         word_count = 0
 
-        with open(filename, 'r') as file:
+        with open(filename, 'r', encoding='utf-8') as file:
             for line in file:
                 line_count += 1
                 columns = line.strip().split('\t')
