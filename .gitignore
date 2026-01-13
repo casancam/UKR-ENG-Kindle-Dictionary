@@ -18,3 +18,5 @@ venv/
 
 # Built MOBI file (distributed via GitHub Releases)
 *.mobi
+
+nul

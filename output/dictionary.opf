@@ -32,6 +32,7 @@
     <item id="dictionary1" href="dictionary-1.xhtml" media-type="application/xhtml+xml" />
     <item id="dictionary2" href="dictionary-2.xhtml" media-type="application/xhtml+xml" />
     <item id="dictionary3" href="dictionary-3.xhtml" media-type="application/xhtml+xml" />
+    <item id="style" href="style.css" media-type="text/css" />
   </manifest>
 
   <spine>

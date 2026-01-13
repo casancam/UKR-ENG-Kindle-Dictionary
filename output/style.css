@@ -1,26 +1,16 @@
-h5 {
-  font-size: 1em;
-  margin: 0;
+/* Minimal CSS for Kindle Dictionary */
+body {
+    font-family: serif;
+    margin: 0;
+    padding: 0;
 }
 
 dt {
-  font-weight: bold;
+    font-weight: bold;
+    margin-top: 0.5em;
 }
 
 dd {
-  margin: 0;
-  padding: 0 0 0.5em 0;
-  display: block;
-}
-
-b {
-  color: darkred;
-}
-
-span, span b, em {
-  color: green;
-}
-
-a {
-  text-decoration: underline;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
 }
