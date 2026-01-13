@@ -103,8 +103,9 @@ def build_mobi():
             ebook_convert,
             opf_file,
             output_mobi,
-            '--mobi-file-type=both',  # Create both old and new MOBI formats
-            '--enable-heuristics',
+            '--mobi-file-type=old',  # Use old MOBI format for better dictionary support
+            '--no-inline-toc',  # Don't generate inline TOC for dictionaries
+            '--mobi-ignore-margins',  # Ignore margins
         ]
 
         # Show live output instead of capturing it
