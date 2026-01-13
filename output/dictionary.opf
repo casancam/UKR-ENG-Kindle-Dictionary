@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookID">
-  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:title>Ukrainian-English Dictionary</dc:title>
     <dc:language>ru</dc:language>
     <dc:creator>casancam (Wiktionary/DBnary)</dc:creator>
     <dc:publisher>Open Source</dc:publisher>
-    <dc:identifier id="BookID" opf:scheme="UUID">urn:uuid:uk-en-dict-2026</dc:identifier>
-    <dc:type>Dictionary</dc:type>
   </metadata>
 
   <x-metadata>
@@ -42,8 +40,6 @@
   </spine>
 
   <guide>
-    <reference type="index" title="IndexName" href="dictionary-1.xhtml" />
-    <reference type="index" title="IndexName" href="dictionary-2.xhtml" />
-    <reference type="index" title="IndexName" href="dictionary-3.xhtml" />
+    <reference type="index" title="Dictionary Index" href="dictionary-1.xhtml" />
   </guide>
 </package>
