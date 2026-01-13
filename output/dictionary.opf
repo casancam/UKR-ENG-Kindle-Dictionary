@@ -2,7 +2,7 @@
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookID">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
     <dc:title>Ukrainian-English Dictionary</dc:title>
-    <dc:language>uk</dc:language>
+    <dc:language>ru</dc:language>
     <dc:creator>casancam (Wiktionary/DBnary)</dc:creator>
     <dc:publisher>Open Source</dc:publisher>
     <dc:identifier id="BookID" opf:scheme="UUID">urn:uuid:uk-en-dict-2026</dc:identifier>
@@ -10,8 +10,8 @@
   </metadata>
 
   <x-metadata>
-    <!-- The language of the dictionary's source words (Ukrainian) -->
-    <DictionaryInLanguage>uk</DictionaryInLanguage>
+    <!-- The language of the dictionary's source words (configured as Russian for Kindle compatibility) -->
+    <DictionaryInLanguage>ru</DictionaryInLanguage>
 
     <!-- The language of the dictionary's definitions (English) -->
     <DictionaryOutLanguage>en</DictionaryOutLanguage>
