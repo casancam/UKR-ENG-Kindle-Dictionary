@@ -19,7 +19,7 @@ Compatible with all Kindle models and generations — including *Kindle Paperwhi
 
 ### Download Pre-built Dictionary (Recommended)
 
-1. Download the latest `uk-en-dictionary.mobi` file from the [Releases](../../releases/latest) page
+1. **[Download uk-en-dictionary.mobi](https://github.com/casancam/UKR-ENG-Kindle-Dictionary/releases/download/v1.0.0/uk-en-dictionary.mobi)** (8.1 MB)
 2. Connect your Kindle to your computer via USB
 3. Copy the MOBI file to your Kindle's `documents` folder
 4. Safely eject your Kindle
