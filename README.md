@@ -95,7 +95,7 @@ Thanks to these great resources that made this dictionary possible:
 
 - **[dmklinger/ukrainian](https://github.com/dmklinger/ukrainian)** for providing the comprehensive Ukrainian-English dictionary data sourced from Wiktionary and DBnary. This project's data is distributed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
-- **[pavlo-liapin/kindle-eng-ukr-dictionary](https://github.com/pavlo-liapin/kindle-eng-ukr-dictionary)** for the inspiration and reference implementation for building Kindle dictionaries, which provided the foundation and approach for this project.
+- **[pavlo-liapin/kindle-eng-ukr-dictionary](https://github.com/pavlo-liapin/kindle-eng-ukr-dictionary)** for the inspiration and reference base implementation for building Kindle dictionaries, which provided the foundation and approach for this project (used his EN-UK repo as a base).
 
 - **Jake McCrary**'s article [Creating a custom Kindle dictionary](https://jakemccrary.com/blog/2020/11/11/creating-a-custom-kindle-dictionary/) for explaining the basics of the Kindle dictionary format.
 
