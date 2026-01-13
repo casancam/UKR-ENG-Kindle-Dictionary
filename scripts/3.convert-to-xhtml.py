@@ -24,7 +24,7 @@ xhtml_footer = (
 )
 
 # Process the generated file and write to XHTML formats
-batch_size = 15000
+batch_size = 30000
 entry_count = 0
 file_count = 1
 output_file = f"output/dictionary-{file_count}.xhtml"

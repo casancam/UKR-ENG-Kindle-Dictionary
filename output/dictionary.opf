@@ -1,47 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookID">
-  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:title>Ukrainian-English Dictionary</dc:title>
-    <dc:language>ru-ru</dc:language>
-    <!-- <dc:identifier id="BookID">urn:uuid:uk-en-dict-2026</dc:identifier> -->
+    <dc:language>ru</dc:language> 
     <dc:creator>casancam (Wiktionary/DBnary)</dc:creator>
     <dc:publisher>Open Source</dc:publisher>
-  </metadata>
+    
+    <meta name="DictionaryInLanguage" content="ru"/>
+    <meta name="DictionaryOutLanguage" content="en"/>
+    <meta name="DefaultLookupIndex" content="default"/>
+</metadata>
 
-  <x-metadata>
-    <!-- The language of the dictionary's source words (configured as Russian for Kindle compatibility) -->
-    <DictionaryInLanguage>ru-ru</DictionaryInLanguage>
-
-    <!-- The language of the dictionary's definitions (English) -->
-    <DictionaryOutLanguage>en-us</DictionaryOutLanguage>
-
+<x-metadata>
+    <DictionaryInLanguage>ru</DictionaryInLanguage>
+    <DictionaryOutLanguage>en</DictionaryOutLanguage>
+    <meta name="lang_in" content="ru"/>
+    <meta name="lang_out" content="en"/>
     <DefaultLookupIndex>default</DefaultLookupIndex>
-
-    <!-- Explicitly marks this as a dictionary -->
-    <CdeType>DICTIONARY</CdeType>
-
-    <!-- UTF-8 encoding for Cyrillic compatibility -->
-    <output encoding="UTF-8" />
-
-    <!-- Human-readable title -->
-    <Title>Ukrainian-English Dictionary</Title>
-  </x-metadata>
+    <IndexName>default</IndexName>
+    <CdeType>DICT</CdeType>
+</x-metadata>
 
   <manifest>
     <!-- Main dictionary files -->
     <item id="dictionary1" href="dictionary-1.xhtml" media-type="application/xhtml+xml" />
-    <item id="dictionary2" href="dictionary-2.xhtml" media-type="application/xhtml+xml" />
-    <item id="dictionary3" href="dictionary-3.xhtml" media-type="application/xhtml+xml" />
     <item id="style" href="style.css" media-type="text/css" />
   </manifest>
 
   <spine>
     <itemref idref="dictionary1" />
-    <itemref idref="dictionary2" />
-    <itemref idref="dictionary3" />
   </spine>
 
   <guide>
-    <reference type="index" title="Dictionary Index" href="dictionary-1.xhtml" />
-  </guide>
+  <reference type="index" title="Index" href="dictionary-1.xhtml"/>
+  <reference type="text" title="Dictionary" href="dictionary-1.xhtml"/>
+</guide>
 </package>
