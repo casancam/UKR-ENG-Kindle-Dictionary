@@ -1,69 +1,133 @@
 #!/usr/bin/env python3
+"""
+Build script to generate MOBI dictionary file from XHTML output.
+
+This script uses Calibre's ebook-convert tool to create a MOBI file
+from the generated XHTML dictionary files.
+
+Prerequisites:
+    - Calibre must be installed (https://calibre-ebook.com)
+    - Dictionary XHTML files must exist in the output/ directory
+
+Usage:
+    python build.py
+"""
+
 import os
 import subprocess
 import sys
 from pathlib import Path
 
-def find_kindlegen():
-    """Find the KindleGen executable (much better for dictionaries than Calibre)."""
+
+def check_calibre_installed():
+    """Check if Calibre's ebook-convert is available."""
+    try:
+        # Try to run ebook-convert to check if it's installed
+        result = subprocess.run(
+            ['ebook-convert', '--version'],
+            capture_output=True,
+            text=True
+        )
+        return True
+    except FileNotFoundError:
+        return False
+
+
+def find_ebook_convert():
+    """Find the ebook-convert executable."""
+    # Common Calibre installation paths
     common_paths = [
-        'kindlegen', 
-        # Windows Path (Update <YourUsername> or use the dynamic one below)
-        f'C:\\Users\\Casancam\\AppData\\Local\\Amazon\\Kindle Previewer 3\\lib\\fc\\bin\\kindlegen.exe',
-        # macOS Path
-        '/Applications/Kindle Previewer 3.app/Contents/lib/fc/bin/kindlegen',
+        r'C:\Program Files\Calibre2\ebook-convert.exe',
+        r'C:\Program Files (x86)\Calibre2\ebook-convert.exe',
+        '/usr/bin/ebook-convert',
+        '/usr/local/bin/ebook-convert',
+        '/Applications/calibre.app/Contents/MacOS/ebook-convert',
     ]
 
+    # Check if ebook-convert is in PATH
+    try:
+        result = subprocess.run(['ebook-convert', '--version'],
+                              capture_output=True, text=True)
+        return 'ebook-convert'
+    except FileNotFoundError:
+        pass
+
+    # Check common installation paths
     for path in common_paths:
-        try:
-            # Check if it works
-            subprocess.run([path], capture_output=True)
+        if os.path.exists(path):
             return path
-        except FileNotFoundError:
-            continue
+
     return None
 
+
 def build_mobi():
-    print("\033[1;36mBuilding Kindle Dictionary with KindleGen\033[0m\n")
+    """Build the MOBI file from XHTML sources."""
+    print("\033[1;36m" + "=" * 60 + "\033[0m")
+    print("\033[1;36mBuilding Ukrainian-English Dictionary MOBI file\033[0m")
+    print("\033[1;36m" + "=" * 60 + "\033[0m\n")
 
-    opf_file = 'output/dictionary.opf'
-    kindlegen = find_kindlegen()
-
-    if not kindlegen:
-        print("\033[1;31mError: KindleGen not found.\033[0m")
-        print("Calibre's ebook-convert often strips dictionary metadata.")
-        print("Please download KindleGen or Kindle Previewer 3.")
+    # Check if output directory exists
+    if not os.path.exists('output'):
+        print("\033[1;31mError: output/ directory not found.\033[0m")
+        print("Please run 'python main.py' first to generate the dictionary files.")
         return False
 
+    # Check if dictionary files exist
+    opf_file = 'output/dictionary.opf'
+    if not os.path.exists(opf_file):
+        print(f"\033[1;31mError: {opf_file} not found.\033[0m")
+        print("Please run 'python main.py' first to generate the dictionary files.")
+        return False
+
+    # Find ebook-convert
+    ebook_convert = find_ebook_convert()
+
+    if not ebook_convert:
+        print("\033[1;31mError: Calibre's ebook-convert not found.\033[0m")
+        print("\nPlease install Calibre from: https://calibre-ebook.com")
+        print("\nAfter installation:")
+        print("  - On Windows: Add Calibre to your PATH")
+        print("  - On macOS/Linux: ebook-convert should be available automatically")
+        return False
+
+    print(f"\033[1;32mOK - Found ebook-convert: {ebook_convert}\033[0m\n")
+
+    # Output MOBI file
     output_mobi = 'uk-en-dictionary.mobi'
-    
-    # KindleGen creates the .mobi in the same folder as the .opf
-    # We will move it afterwards.
+
+    print(f"\033[1;34mConverting to MOBI format...\033[0m")
+
     try:
-        # -c2 means standard compression (smaller file)
-        # -verbose helps debug why Kindle might reject a record
-        cmd = [kindlegen, opf_file, '-c0', '-o', output_mobi]
-        
-        print(f"Running: {' '.join(cmd)}")
+        # Run ebook-convert
+        cmd = [
+            ebook_convert,
+            opf_file,
+            output_mobi,
+            '--mobi-file-type=both',  # Create both old and new MOBI formats
+            '--enable-heuristics',
+        ]
+
+        # Show live output instead of capturing it
         result = subprocess.run(cmd)
 
-        # KindleGen returns 1 for warnings, 2 for errors. 
-        # Usually, warnings (1) still produce a working file.
-        if result.returncode in [0, 1]:
-            generated_path = Path('output') / output_mobi
-            final_path = Path('.') / output_mobi
-            
-            if generated_path.exists():
-                os.replace(generated_path, final_path)
-                print(f"\n\033[1;32mSUCCESS - Created {output_mobi}\033[0m")
-                return True
-        
-        print(f"\033[1;31mError: KindleGen failed with code {result.returncode}\033[0m")
-        return False
+        if result.returncode == 0:
+            file_size = os.path.getsize(output_mobi) / (1024 * 1024)
+            print(f"\n\033[1;32mSUCCESS - Created {output_mobi}\033[0m")
+            print(f"\033[1;32m  File size: {file_size:.1f} MB\033[0m\n")
+
+            print("\033[1;36mNext steps:\033[0m")
+            print("1. Copy the MOBI file to your Kindle's 'documents' folder")
+            print("2. On your Kindle, go to Settings > Your Account > Language & Dictionaries")
+            print("3. Select this dictionary as the default Ukrainian dictionary\n")
+            return True
+        else:
+            print(f"\033[1;31mError during conversion (exit code {result.returncode})\033[0m")
+            return False
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"\033[1;31mError: {e}\033[0m")
         return False
+
 
 if __name__ == "__main__":
     success = build_mobi()
